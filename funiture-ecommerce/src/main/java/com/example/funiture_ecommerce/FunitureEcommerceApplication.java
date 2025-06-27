@@ -9,5 +9,4 @@ public class FunitureEcommerceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(FunitureEcommerceApplication.class, args);
 	}
-
 }
