@@ -1,5 +1,7 @@
 package com.example.funiture_ecommerce.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.funiture_ecommerce.requestDto.ProductRequestDto;
+import com.example.funiture_ecommerce.response.ProductListResponse;
 import com.example.funiture_ecommerce.service.ProductService;
 
 @RestController
@@ -27,6 +30,11 @@ public class ProductController {
 	@PostMapping(path = "/create")
 	public void createProduct(@RequestBody ProductRequestDto d) {
 		productService.create(d);
+	}
+	
+	@GetMapping(path = "/getAll")
+	public ProductListResponse getAllProduct(){
+		return productService.getAll();
 	}
 	
 }
