@@ -53,4 +53,21 @@ public class ProductService {
 		return response;
 	}
 
+	public void update(ProductRequestDto dto) {
+		if (dto.getId() == null || dto.getId() <= 0) {
+			throw new OurRuntimeException(null, "id mutleqdir");
+		}
+		Optional<Product> byId = productRepository.findById(dto.getId());
+		if (byId.isPresent()) {
+			Product product = byId.get();
+			product.setId(dto.getId());
+			product.setName(dto.getName());
+			product.setPrice(dto.getPrice());
+			product.setImage(dto.getImage());
+			productRepository.save(product);
+		}else {
+			throw new OurRuntimeException(null, "id tapilmadi");
+		}
+	}
+
 }
