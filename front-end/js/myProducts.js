@@ -25,6 +25,7 @@ function loadOnProducts(){
                 <td>
                     <img src="${element.image}" style="width: 100px"; height: 80px; object-fit:cover; />
                 </td>
+                <td><button type="button" class="btn btn-primary edit-btn" data-id="${element.id}">Edit</td>
                 </tr>
                 
                 `
@@ -41,4 +42,13 @@ let newProductButton = document.querySelector(".sub-main button");
 
 newProductButton.addEventListener('click', (e) => {
     window.location.href = "products.html";
+})
+
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('edit-btn')) {
+        const productId = e.target.getAttribute('data-id');
+        console.log(productId);
+        
+        window.location.href = `products.html?id=${productId}`;
+    }
 })

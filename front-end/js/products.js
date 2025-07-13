@@ -32,3 +32,28 @@ function addProduct(){
 }
 
 addProduct();
+
+function editProduct(){
+    const token = localStorage.getItem('token');
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
+
+    fetch(`http://localhost:8086/products/getById/${productId}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(async response => {
+        if (response.ok) {
+            const object = await response.json();
+            console.log(object);
+            document.getElementById('product-name').value = object.name;
+            document.getElementById('product-price').value = object.price;
+            document.getElementById('product-image').value = object.image;
+        }
+    })
+}
+
+editProduct();
