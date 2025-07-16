@@ -70,4 +70,16 @@ public class ProductService {
 		}
 	}
 
+	public void delete(Integer id) {
+		if (id == null || id <= 0) {
+			throw new OurRuntimeException(null, "id mutleqdir");
+		}
+		if (productRepository.findById(id).isPresent()) {
+			productRepository.deleteById(id);
+		}else {
+			throw new OurRuntimeException(null, "id tapilmadi");
+		}
+		
+	}
+
 }
