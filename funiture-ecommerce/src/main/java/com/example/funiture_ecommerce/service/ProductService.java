@@ -4,11 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.example.funiture_ecommerce.entity.Product;
+import com.example.funiture_ecommerce.entity.User;
 import com.example.funiture_ecommerce.exception.OurRuntimeException;
 import com.example.funiture_ecommerce.repository.ProductRepository;
+import com.example.funiture_ecommerce.repository.UserRepository;
 import com.example.funiture_ecommerce.requestDto.ProductRequestDto;
 import com.example.funiture_ecommerce.response.ProductListResponse;
 import com.example.funiture_ecommerce.response.ProductResponseDto;
@@ -18,18 +21,30 @@ public class ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	public void create(ProductRequestDto d) {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		User user = userRepository.getUserByUsername(username);
+		Integer id = user.getId();
+		
 		Product product = new Product();
 		product.setId(null);
 		product.setName(d.getName());
 		product.setPrice(d.getPrice());
 		product.setImage(d.getImage());
+		product.setUserId(id);
 		productRepository.save(product);
 	}
 
 	public ProductListResponse getAll() {
-		List<Product> products = productRepository.findAll();
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		User user = userRepository.getUserByUsername(username);
+		Integer id = user.getId();
+		
+		List<Product> products = productRepository.findAllByUserId(id);
 		ProductListResponse response = new ProductListResponse();
 		response.setProducts(products);
 		return response;

@@ -13,9 +13,10 @@ function addProduct() {
         }
 
         const productId = localStorage.getItem('productId');
+        // localStorage.removeItem('productId');
 
         if (productId) {
-            updateProduct();
+            updateProduct(product,productId);
         } else {
             fetch('http://localhost:8086/products/create', {
                 method: 'POST',
@@ -44,41 +45,45 @@ function editProduct() {
 
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get('id');
-    localStorage.setItem('productId', productId);
 
-    fetch(`http://localhost:8086/products/getById/${productId}`, {
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    })
-        .then(async response => {
-            if (response.ok) {
-                const object = await response.json();
-                console.log(object);
-                document.getElementById('product-name').value = object.name;
-                document.getElementById('product-price').value = object.price;
-                document.getElementById('product-image').value = object.image;
+    if (productId) {
+        localStorage.setItem('productId', productId);
+
+        fetch(`http://localhost:8086/products/getById/${productId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
             }
         })
+            .then(async response => {
+                if (response.ok) {
+                    const object = await response.json();
+                    console.log(object);
+                    document.getElementById('product-name').value = object.name;
+                    document.getElementById('product-price').value = object.price;
+                    document.getElementById('product-image').value = object.image;
+                }
+            })
+    }
+
 }
 
 editProduct();
 
-function updateProduct() {
+function updateProduct(product,productId) {
 
     const token = localStorage.getItem('token');
 
     const productForm = document.querySelector('form');
 
-    const productId = localStorage.getItem('productId');
+    // const productId = localStorage.getItem('productId');
 
-    const product = {
-        id: productId,
-        name: document.getElementById('product-name').value,
-        price: document.getElementById('product-price').value,
-        image: document.getElementById('product-image').value
-    }
+    // const product = {
+    //     id: productId,
+    //     name: document.getElementById('product-name').value,
+    //     price: document.getElementById('product-price').value,
+    //     image: document.getElementById('product-image').value
+    // }
 
     productForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -89,7 +94,12 @@ function updateProduct() {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(product)
+            body: JSON.stringify({
+                id:productId,
+                name: product.name,
+                price: product.price,
+                image: product.image
+            })
         })
             .then(response => {
                 if (response.ok) {
@@ -100,3 +110,9 @@ function updateProduct() {
             })
     })
 }
+
+const myProductsBtn = document.querySelector('.my-products');
+
+myProductsBtn.addEventListener('click', () => {
+    window.location.href = "myProducts.html";
+})
