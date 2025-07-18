@@ -97,4 +97,11 @@ public class ProductService {
 		
 	}
 
+	public ProductListResponse getAllProduct() {
+		ProductListResponse response = new ProductListResponse();
+		List<Product> all = productRepository.findAll();
+		response.setProducts(all);
+		return response;
+	}
+
 }

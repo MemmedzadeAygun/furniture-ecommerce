@@ -56,4 +56,9 @@ public class ProductController {
 		productService.delete(id);
 	}
 	
+	@GetMapping(path = "/all")
+	public ProductListResponse getAll() {
+		return productService.getAllProduct();
+	}
+	
 }
