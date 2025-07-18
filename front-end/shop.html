@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/products.css">
-    <title>Products</title>
+    <link rel="stylesheet" href="./css/shop.css">
+    <title>Shop</title>
 </head>
 
 <body>
@@ -14,7 +14,7 @@
             <div class="part1">
                 <ul>
                     <li><a href="./index.html">Home</a></li>
-                    <li><a href="./shop.html">Shop</a></li>
+                    <li><a href="#">Shop</a></li>
                     <li><a href="#">About</a></li>
                     <li><a href="#">Contact</a></li>
                     <li><a href="./login.html">Signin</a></li>
@@ -29,33 +29,33 @@
                 </ul>
             </div>
         </div>
+        <div class="header-image">
+            <img src="./image/Frame 78.png" alt="">
+        </div>
     </header>
     <main>
-        <div class="sub-main">
-            <div class="form-elements">
-                <button class="my-products">My Products</button>
-                <div class="form-element">
-                    <form>
-                    <div class="element">
-                        <a href="#"></a>
-                        <label><a href="#">Product Name</a></label> <br>
-                        <input type="text" id="product-name">
-                    </div>
-                    <div class="element">
-                        <label><a href="#">Product Price</a></label> <br>
-                        <input type="number" step="0.01" id="product-price">
-                    </div>
-                    <div class="element">
-                        <label><a href="#">Product Image</a></label> <br>
-                        <input type="text" id="product-image">
-                    </div>
-                    <button>Save</button>
-                </form>
+        <div class="main-part1">
+            <div class="sub-main-part1">
+                <div class="search-input">
+                    <input type="search" placeholder="search">
                 </div>
+                <div class="filter-input">
+                    <select>
+                        <option value="">Sort By</option>
+                        <option value="">Sort by: Price (Low to High)</option>
+                        <option value="">Sort by: Price (High to Low)</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+        <div class="sub-main">
+            <div class="cards">
+                
             </div>
         </div>
     </main>
-    <footer>
+     <footer>
         <div class="sub-footer">
             <div class="f_part1">
                 <p><a href="#">400 University Drive Suit 200 Coral Gables, FL 33134USA</a></p>
@@ -87,7 +87,7 @@
         </div>
     </footer>
 
-    <script src="./js/products.js"></script>
+    <script src="./js/shop.js"></script>
 </body>
 
 </html>
