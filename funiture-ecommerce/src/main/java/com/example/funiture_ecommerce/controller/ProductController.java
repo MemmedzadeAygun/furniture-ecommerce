@@ -66,4 +66,9 @@ public class ProductController {
 	public List<ProductResponseDto> searchProduct(@RequestParam(name = "query") String query){
 		return productService.search(query);
 	}
+	
+	@GetMapping(path = "/sort")
+	public List<ProductResponseDto> sortedProduct(@RequestParam(name = "sort",required = false) String sort){
+		return productService.sortedProduct(sort);
+	}
 }

@@ -119,4 +119,25 @@ public class ProductService {
 				.collect(Collectors.toList());
 	}
 
+	public List<ProductResponseDto> sortedProduct(String sort) {
+		List<Product> products;
+		
+		if ("priceAsc".equalsIgnoreCase(sort)) {
+			products = productRepository.findAllByOrderByPriceAsc();
+		}else if("priceDesc".equalsIgnoreCase(sort)) {
+			products = productRepository.findAllByOrderByPriceDesc();
+		}else {
+			products = productRepository.findAll();
+		}
+		return products.stream().map(product -> {
+			ProductResponseDto response = new ProductResponseDto();
+			response.setId(product.getId());
+			response.setName(product.getName());
+			response.setPrice(product.getPrice());
+			response.setImage(product.getImage());
+			return response;
+		})
+				.collect(Collectors.toList());
+	}
+
 }
