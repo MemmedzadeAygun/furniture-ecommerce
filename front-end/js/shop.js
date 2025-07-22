@@ -35,6 +35,17 @@ function showProducts(){
 
                 let addToCardBtn = document.createElement('button');
                 addToCardBtn.textContent = 'add to card';
+                addToCardBtn.setAttribute('data-id', element.id);
+
+                addToCardBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    let productId = addToCardBtn.getAttribute('data-id');
+                    console.log(productId);
+
+                    addToCart(productId);
+                    
+                })
+
                 addToCardBtn.style.backgroundColor = 'black';
                 addToCardBtn.style.color = 'white';
                 addToCardBtn.style.border = 'none';
@@ -189,3 +200,25 @@ document.addEventListener('click', (e) => {
         window.location.href = `productDetail.html?id=${productId}`;
     }
 })
+
+function addToCart(productId){
+
+    const token = localStorage.getItem('token');
+
+    const cart = {
+        productId: productId
+    }
+
+    fetch(`http://localhost:8086/cart/add`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(cart)
+    })
+    .then(async response => {
+        let message = await response.text();
+        alert(message);
+    })
+}

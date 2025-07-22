@@ -27,4 +27,6 @@ public class Cart {
 	
 	@ManyToOne
 	private Product product;
+	
+	private Integer userId;
 }
