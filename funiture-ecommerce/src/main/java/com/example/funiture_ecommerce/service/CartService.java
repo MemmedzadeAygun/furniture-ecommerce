@@ -1,5 +1,8 @@
 package com.example.funiture_ecommerce.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -12,6 +15,7 @@ import com.example.funiture_ecommerce.repository.CartRepository;
 import com.example.funiture_ecommerce.repository.ProductRepository;
 import com.example.funiture_ecommerce.repository.UserRepository;
 import com.example.funiture_ecommerce.requestDto.CartRequestDto;
+import com.example.funiture_ecommerce.response.CartResponseDto;
 
 @Service
 public class CartService {
@@ -40,6 +44,26 @@ public class CartService {
 		cart.setSubTotal(subTotal);
 		cart.setUserId(id);
 		cartRepository.save(cart);
+	}
+
+	public List<CartResponseDto> getCart() {
+		
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		User user = userRepository.getUserByUsername(username);
+		Integer id = user.getId();
+		
+		List<Cart> carts = cartRepository.findAllByUserId(id);
+		return carts.stream().map(cart -> {
+			CartResponseDto response = new CartResponseDto();
+			response.setId(cart.getId());
+			response.setProduct(cart.getProduct());
+			response.setQuantity(cart.getQuantity());
+			response.setUserId(cart.getUserId());
+			response.setSubTotal(cart.getSubTotal());
+			response.setUserId(id);
+			return response;
+		})
+				.collect(Collectors.toList());
 	}
 
 }
