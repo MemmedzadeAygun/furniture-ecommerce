@@ -20,6 +20,7 @@ function showProducts(){
 
                 let cardDiv = document.createElement('div');
                 cardDiv.classList.add('card');
+                cardDiv.setAttribute('data-id',element.id);
                 
                 let imgDiv = document.createElement('div');
 
@@ -178,4 +179,13 @@ function sortProducts(){
     })
 }
 
-sortProducts()
+sortProducts();
+
+document.addEventListener('click', (e) => {
+    if (e.target.closest('.card')) {
+        let productId = e.target.closest('.card').getAttribute('data-id');
+        console.log(productId);
+        
+        window.location.href = `productDetail.html?id=${productId}`;
+    }
+})
