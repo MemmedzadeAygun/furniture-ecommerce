@@ -13,7 +13,10 @@ function loadOnTable(){
 
         let tableContent = '';
 
+        let total = 0;
+
         data.forEach(cart => {
+            total += cart.subTotal;
             tableContent += `
                 <tr>
                     <td>
@@ -37,11 +40,18 @@ function loadOnTable(){
                           ${cart.subTotal} AZN
                         </div>
                     </td>
+                    <td>
+                        <div>
+                            <img src="./image/bin.png" style="width:25px; height:25px; object-fir:cover;" />
+                        </div>
+                    </td>
                 </tr>
             `
         });
         
         document.getElementById('tbody').innerHTML = tableContent;
+        document.querySelector('.subtotal p').textContent = total;
+        document.querySelector('.total p').textContent = total;
     })
 }
 
