@@ -70,6 +70,12 @@ main{
     gap: 30px;
     margin-top: 40px;
 }
+
+tr td {
+    font-size: 13px;
+    color: black;
+    text-align: start;
+}
 .left-side{
     width: 75%;
     /* border: 1px solid black; */
