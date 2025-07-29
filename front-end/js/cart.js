@@ -1,4 +1,4 @@
-function loadOnTable(){
+function loadOnTable() {
     const token = localStorage.getItem('token');
 
     fetch(`http://localhost:8086/cart/getCart`, {
@@ -7,17 +7,17 @@ function loadOnTable(){
             'Authorization': `Bearer ${token}`
         }
     })
-    .then(async response => {
-        let data = await response.json();
-        console.log(data);
+        .then(async response => {
+            let data = await response.json();
+            console.log(data);
 
-        let tableContent = '';
+            let tableContent = '';
 
-        let total = 0;
+            let total = 0;
 
-        data.forEach(cart => {
-            total += cart.subTotal;
-            tableContent += `
+            data.forEach(cart => {
+                total += cart.subTotal;
+                tableContent += `
                 <tr>
                     <td>
                         <div style="display:flex; align-items:center; gap:10px;">
@@ -42,42 +42,69 @@ function loadOnTable(){
                     </td>
                     <td>
                         <div>
-                            <img src="./image/bin.png" style="width:25px; height:25px; object-fir:cover;" />
+                            <img src="./image/bin.png" class="delete-btn" data-id="${cart.id}" style="width:25px; height:25px; object-fir:cover; cursor:pointer;" />
                         </div>
                     </td>
                 </tr>
             `
-        });
-        
-        document.getElementById('tbody').innerHTML = tableContent;
-        document.querySelector('.subtotal p').textContent = total;
-        document.querySelector('.total p').textContent = total;
+            });
 
-        document.querySelectorAll('.quantity-input').forEach(input => {
-            input.addEventListener('change', (e) => {
-                let newQuantity = e.target.value;
-                let cartId = e.target.getAttribute('data-cart-id');
+            document.getElementById('tbody').innerHTML = tableContent;
+            document.querySelector('.subtotal p').textContent = total;
+            document.querySelector('.total p').textContent = total;
 
-                const cart = {
-                    id: cartId,
-                    quantity: newQuantity
-                }
+            document.querySelectorAll('.quantity-input').forEach(input => {
+                input.addEventListener('change', (e) => {
+                    let newQuantity = e.target.value;
+                    let cartId = e.target.getAttribute('data-cart-id');
 
-                fetch(`http://localhost:8086/cart/update`, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(cart)
+                    const cart = {
+                        id: cartId,
+                        quantity: newQuantity
+                    }
+
+                    fetch(`http://localhost:8086/cart/update`, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(cart)
+                    })
+                        .then(msj => {
+                            loadOnTable();
+                        })
                 })
-                .then(msj => {
-                    loadOnTable();
-                })
-            }) 
+            })
+
         })
-
-    })
 }
 
 loadOnTable();
+
+function deleteFromCart() {
+
+    const token = localStorage.getItem('token');
+
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('delete-btn')) {
+            let cartId = e.target.getAttribute('data-id');
+
+            if (confirm("Are you sure?")) {
+
+                fetch(`http://localhost:8086/cart/delete/${cartId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                    .then(resp => {
+                        e.target.closest("tr").remove();
+                        loadOnTable();
+                    })
+            }
+        }
+    })
+}
+
+deleteFromCart();
