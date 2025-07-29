@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,5 +33,10 @@ public class CartController {
 	@GetMapping(path = "/getCart") 
 	public List<CartResponseDto> getCart(){
 		return cartService.getCart();
+	}
+	
+	@PutMapping(path = "/update")
+	public void update(@RequestBody CartRequestDto dto) {
+		cartService.update(dto);
 	}
 }

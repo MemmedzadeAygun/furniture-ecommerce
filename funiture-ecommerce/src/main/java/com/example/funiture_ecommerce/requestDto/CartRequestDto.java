@@ -10,6 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CartRequestDto {
+	private Integer id;
 	private Integer productId;
 	private Integer quantity;
 	private Double subTotal;

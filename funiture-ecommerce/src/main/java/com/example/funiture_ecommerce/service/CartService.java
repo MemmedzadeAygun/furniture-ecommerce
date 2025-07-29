@@ -66,4 +66,18 @@ public class CartService {
 				.collect(Collectors.toList());
 	}
 
+	public void update(CartRequestDto dto) {
+		Cart cart = cartRepository.findById(dto.getId())
+		.orElseThrow(() -> new OurRuntimeException(null, "cart not found"));
+		
+		Integer quantity = (dto.getQuantity() == null || dto.getQuantity() <= 0)? 1 : dto.getQuantity();
+		
+		cart.setQuantity(quantity);
+		
+		Double subTotal = cart.getProduct().getPrice() * quantity;
+		
+		cart.setSubTotal(subTotal);
+		cartRepository.save(cart);
+	}
+
 }
