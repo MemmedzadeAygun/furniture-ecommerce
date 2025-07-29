@@ -32,7 +32,7 @@ function loadOnTable(){
                     </td>
                      <td>
                         <div style="display:flex; justify-content:center;">
-                          <input type="number" min="1" value="${cart.quantity}" style="width: 50px;">
+                          <input type="number" min="1" value="${cart.quantity}" class="quantity-input" data-cart-id="${cart.id}" style="width: 50px;">
                         </div>
                     </td>
                      <td>
@@ -52,6 +52,31 @@ function loadOnTable(){
         document.getElementById('tbody').innerHTML = tableContent;
         document.querySelector('.subtotal p').textContent = total;
         document.querySelector('.total p').textContent = total;
+
+        document.querySelectorAll('.quantity-input').forEach(input => {
+            input.addEventListener('change', (e) => {
+                let newQuantity = e.target.value;
+                let cartId = e.target.getAttribute('data-cart-id');
+
+                const cart = {
+                    id: cartId,
+                    quantity: newQuantity
+                }
+
+                fetch(`http://localhost:8086/cart/update`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(cart)
+                })
+                .then(msj => {
+                    loadOnTable();
+                })
+            }) 
+        })
+
     })
 }
 
