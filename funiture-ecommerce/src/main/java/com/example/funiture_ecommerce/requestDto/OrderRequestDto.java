@@ -49,6 +49,7 @@ public class OrderRequestDto {
 	@NotBlank(message = "Can not empty expiry month")
 	private String expiryMonth;
 	
+	@NotNull(message = "Expiryyear cannot be null.")
 	@Min(value = 23, message = "Expiry year must be greater than or equals to the current year")
 	private Integer expiryYear;
 	
