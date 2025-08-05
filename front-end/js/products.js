@@ -116,3 +116,8 @@ const myProductsBtn = document.querySelector('.my-products');
 myProductsBtn.addEventListener('click', () => {
     window.location.href = "myProducts.html";
 })
+
+
+document.getElementById('log-out').addEventListener('click', () => {
+    localStorage.removeItem('token');
+})

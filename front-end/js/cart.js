@@ -129,3 +129,7 @@ document.querySelector(".btn button").addEventListener('click', () => {
         window.location.href = "checkout.html";
     })
 })
+
+document.getElementById('log-out').addEventListener('click', () => {
+    localStorage.removeItem('token');
+})

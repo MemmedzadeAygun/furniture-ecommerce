@@ -66,11 +66,19 @@ header {
     gap: 25px;
     list-style-type: none;
 }
-
+.sub-header .part2 ul li button{
+    padding: 5px;
+    background-color: white;
+    border: 0;
+    border: 1px solid black;
+    color: black;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+}
 .sub-header .part2 ul li a img {
     width: 20px;
 }
-
 .sub-main {
     width: 85%;
     margin: auto;

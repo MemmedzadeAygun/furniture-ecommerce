@@ -26,3 +26,7 @@ let productButton = document.querySelector('.sub-main button');
 productButton.addEventListener('click', (e) => {
     window.location.href = 'myProducts.html';
 })
+
+document.getElementById('log-out').addEventListener('click', () => {
+    localStorage.removeItem('token');
+})

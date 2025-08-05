@@ -47,7 +47,7 @@ document.getElementById('orderBtn').addEventListener('click', () => {
         Promise.all(promises)
             .then(async responses => {
                 let response = responses.find(resp => resp.ok);
-                if (response.ok) {
+                if (response) {
                     let message = await response.text();
                     // alert(message);
                     Swal.fire({
@@ -160,3 +160,7 @@ function getSubTotal() {
 }
 
 getSubTotal()
+
+document.getElementById('log-out').addEventListener('click', () => {
+    localStorage.removeItem('token');
+})
